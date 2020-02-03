@@ -56,7 +56,7 @@ void main() {
       });
 
       test('return exception when retreival is unsuccessful', () async {
-        when(mockRemoteDataSource.getConcreteNumberTrivia(inputNumber))
+        when(mockRemoteDataSource.getConcreteNumberTrivia(any))
             .thenThrow(ServerException());
 
         final result = await subject.getConcreteNumberTrivia(inputNumber);
@@ -70,9 +70,28 @@ void main() {
     group('when device is offline', () {
       setUp(() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+        when(mockRemoteDataSource.getConcreteNumberTrivia(any))
+            .thenThrow(ServerException());
+        when(mockLocalDataSource.getLastNumberTrivia())
+            .thenAnswer((_) => expectedNumberTrivia);
       });
 
-      test('should check if the device is online', () {});
+      test('return cached data when present', () async {
+        final anotherNumber = 3;
+        final result = await subject.getConcreteNumberTrivia(anotherNumber);
+
+        expect(result, equals(Right(expectedNumberTrivia)));
+      });
+
+      test('return exception when no cached data is present', () async {
+        when(mockLocalDataSource.getLastNumberTrivia())
+            .thenThrow(CacheException());
+
+        final anotherNumber = 3;
+        final result = await subject.getConcreteNumberTrivia(anotherNumber);
+
+        expect(result, equals(Left(CacheException())));
+      });
     });
   });
 }
