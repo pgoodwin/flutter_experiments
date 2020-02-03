@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_experiments/src/failures/failure.dart';
 import 'package:meta/meta.dart';
 
 class NumberTrivia extends Equatable {
@@ -24,6 +23,6 @@ class NumberTrivia extends Equatable {
   }
 }
 
-abstract class NumberTriviaRepository {
-  Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(int number);
+class NumberTriviaRepository {
+  Future<Either<Exception, NumberTrivia>> getConcreteNumberTrivia(int number) {}
 }
