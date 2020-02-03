@@ -23,6 +23,6 @@ class NumberTrivia extends Equatable {
   }
 }
 
-class NumberTriviaRepository {
-  Future<Either<Exception, NumberTrivia>> getConcreteNumberTrivia(int number) {}
+abstract class NumberTriviaRepository {
+  Future<Either<Exception, NumberTrivia>> getConcreteNumberTrivia(int number);
 }

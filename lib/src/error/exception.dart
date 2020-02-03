@@ -1,3 +1,5 @@
-class ServerException implements Exception {}
+import 'package:equatable/equatable.dart';
 
-class CacheException implements Exception {}
+class ServerException extends Equatable implements Exception {}
+
+class CacheException extends Equatable implements Exception {}

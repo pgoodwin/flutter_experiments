@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_experiments/src/number_trivia/number_trivia.dart';
+import 'package:meta/meta.dart';
 
 class NumberTriviaService {
   NumberTriviaRepository numberTriviaRepository;
