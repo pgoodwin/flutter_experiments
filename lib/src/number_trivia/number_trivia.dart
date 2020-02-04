@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -18,9 +20,12 @@ class NumberTrivia extends Equatable {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {'text': text, 'number': number};
-  }
+  factory NumberTrivia.fromJsonString(String string) =>
+      NumberTrivia.fromJson(json.decode(string));
+
+  Map<String, dynamic> toJson() => {'text': text, 'number': number};
+
+  String toJsonString() => json.encode(this.toJson());
 }
 
 abstract class NumberTriviaRepository {

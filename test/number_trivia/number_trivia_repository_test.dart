@@ -73,7 +73,7 @@ void main() {
         when(mockRemoteDataSource.getConcreteNumberTrivia(any))
             .thenThrow(ServerException());
         when(mockLocalDataSource.getLastNumberTrivia())
-            .thenAnswer((_) => expectedNumberTrivia);
+            .thenAnswer((_) async => expectedNumberTrivia);
       });
 
       test('return cached data when present', () async {

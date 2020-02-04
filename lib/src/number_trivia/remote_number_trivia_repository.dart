@@ -24,7 +24,7 @@ class RemoteNumberTriviaRepository implements NumberTriviaRepository {
         localDataSource.cacheNumberTrivia(trivia);
         return Right(trivia);
       } else {
-        return Right(localDataSource.getLastNumberTrivia());
+        return Right(await localDataSource.getLastNumberTrivia());
       }
     } catch (e) {
       return Left(e);
