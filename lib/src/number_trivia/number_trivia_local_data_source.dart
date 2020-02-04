@@ -4,12 +4,12 @@ import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NumberTriviaLocalDataSource {
-  final _triviaKey = 'LAST_REPORTED_NUMBER_TRIVIA';
+  static const _triviaKey = 'LAST_REPORTED_NUMBER_TRIVIA';
   SharedPreferences sharedPreferences;
 
   NumberTriviaLocalDataSource({@required this.sharedPreferences});
 
-  /// Gets the cached [NumberTriviaModel] which was gotten the last time
+  /// Gets the cached [NumberTrivia] which was gotten the last time
   /// the user had an internet connection.
   ///
   /// Throws [CacheException] if no cached data is present.
