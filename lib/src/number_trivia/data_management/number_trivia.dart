@@ -13,12 +13,10 @@ class NumberTrivia extends Equatable {
     @required this.number,
   }) : super([text, number]);
 
-  factory NumberTrivia.fromJson(Map<String, dynamic> jsonMap) {
-    return NumberTrivia(
+  factory NumberTrivia.fromJson(Map<String, dynamic> jsonMap) => NumberTrivia(
       text: jsonMap['text'],
       number: (jsonMap['number'] as num).toInt(),
     );
-  }
 
   factory NumberTrivia.fromJsonString(String string) =>
       NumberTrivia.fromJson(json.decode(string));
