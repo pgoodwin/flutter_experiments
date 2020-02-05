@@ -59,13 +59,13 @@ void main() {
     });
   });
 
-  void expectFailureBehavior(Exception exception, String message) {
+  void expectFailureBehavior({Exception thrown, String yields}) {
     when(mockNumberTriviaService.getNumberTrivia(number: anyNamed('number')))
-        .thenAnswer((_) async => Left(exception));
+        .thenAnswer((_) async => Left(thrown));
     final expected = [
       Empty(),
       Loading(),
-      Error(message: message),
+      Error(message: yields),
     ];
 
     expectLater(subject.state, emitsInOrder(expected));
@@ -74,6 +74,10 @@ void main() {
   }
 
   test('should return server error message for server exceptions', () async {
-    expectFailureBehavior(ServerException(), 'server failure');
+    expectFailureBehavior(thrown: ServerException(), yields: 'server failure');
+  });
+
+  test('should return server error message for cache exceptions', () async {
+    expectFailureBehavior(thrown: CacheException(), yields: 'cache failure');
   });
 }

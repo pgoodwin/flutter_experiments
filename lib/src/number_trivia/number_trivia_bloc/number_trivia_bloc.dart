@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter_experiments/src/error/exception.dart';
 import 'package:flutter_experiments/src/number_trivia/number_trivia_bloc/bloc.dart';
 import 'package:flutter_experiments/src/number_trivia/number_trivia_service.dart';
 import 'package:flutter_experiments/src/util/input_converter.dart';
@@ -9,6 +10,7 @@ import 'package:meta/meta.dart';
 class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   static const _conversionFailureMessage = 'number conversion failed';
   static const _serverFailureMessage = 'server failure';
+  static const _cacheFailureMessage = 'cache failure';
 
   final NumberTriviaService numberTriviaService;
   final InputConverter inputConverter;
@@ -33,9 +35,20 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         final exceptionOrTrivia =
             await numberTriviaService.getNumberTrivia(number: number);
         yield exceptionOrTrivia.fold(
-            (exception) => Error(message: _serverFailureMessage),
+            (exception) => Error(message: messageForException(exception)),
             (trivia) => Loaded(trivia: trivia));
       });
+    }
+  }
+
+  String messageForException(Exception exception) {
+    switch (exception.runtimeType) {
+      case ServerException:
+        return _serverFailureMessage;
+      case CacheException:
+        return _cacheFailureMessage;
+      default:
+        return 'unknown failure type';
     }
   }
 }
