@@ -8,6 +8,7 @@ import 'package:meta/meta.dart';
 
 class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   static const _conversionFailureMessage = 'number conversion failed';
+  static const _serverFailureMessage = 'server failure';
 
   final NumberTriviaService numberTriviaService;
   final InputConverter inputConverter;
@@ -27,7 +28,13 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       yield* inputNumber.fold((exception) async* {
         yield Error(message: _conversionFailureMessage);
       }, (number) async* {
-        throw UnimplementedError();
+        yield Loading();
+
+        final exceptionOrTrivia =
+            await numberTriviaService.getNumberTrivia(number: number);
+        yield exceptionOrTrivia.fold(
+            (exception) => Error(message: _serverFailureMessage),
+            (trivia) => Loaded(trivia: trivia));
       });
     }
   }
