@@ -59,22 +59,21 @@ void main() {
     });
   });
 
-  group('when service returns failure', () {
-    setUp(() {
-      when(mockNumberTriviaService.getNumberTrivia(number: anyNamed('number')))
-          .thenAnswer((_) async => Left(ServerException()));
-    });
+  void expectFailureBehavior(Exception exception, String message) {
+    when(mockNumberTriviaService.getNumberTrivia(number: anyNamed('number')))
+        .thenAnswer((_) async => Left(exception));
+    final expected = [
+      Empty(),
+      Loading(),
+      Error(message: message),
+    ];
 
-    test('should return error from service even when input is valid', () async {
-      final expected = [
-        Empty(),
-        Loading(),
-        Error(message: 'server failure'),
-      ];
+    expectLater(subject.state, emitsInOrder(expected));
 
-      expectLater(subject.state, emitsInOrder(expected));
+    subject.dispatch(GetTriviaForConcreteNumber(validInput));
+  }
 
-      subject.dispatch(GetTriviaForConcreteNumber(validInput));
-    });
+  test('should return server error message for server exceptions', () async {
+    expectFailureBehavior(ServerException(), 'server failure');
   });
 }
