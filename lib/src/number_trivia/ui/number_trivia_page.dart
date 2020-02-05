@@ -18,7 +18,8 @@ class NumberTriviaPage extends StatelessWidget {
   // It is itself a [Widget]
   BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    final widthInset = screenSize.width < 740 ? 20 : (screenSize.width - 700) / 2;
+    final widthInset =
+        screenSize.width < 740 ? 20 : (screenSize.width - 700) / 2;
 
     return BlocProvider(
       builder: (_) => injector<NumberTriviaBloc>(),
@@ -28,12 +29,21 @@ class NumberTriviaPage extends StatelessWidget {
           child: Column(children: <Widget>[
             SizedBox(height: 10),
             // Top half
-            Container(
-              // Third of the height of the screen
-              height: screenSize.height / 3,
-              // Message Text widgets / CircularLoadingIndicator
-              child: Placeholder(),
-            ),
+            BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
+                builder: (context, state) {
+                  if (state is Empty) {
+                    return Container(
+                      // Third of the size of the screen
+                      height: MediaQuery.of(context).size.height / 3,
+                      child: Center(
+                        child: Text('Start searching!'),
+                      ),
+                    );
+                  } else {
+                    return Placeholder();
+                  }
+                  // We're going to also check for the other states
+                }),
             SizedBox(height: 20),
             // Bottom half
             Column(children: <Widget>[
