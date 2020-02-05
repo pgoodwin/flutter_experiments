@@ -56,8 +56,8 @@ class NumberTriviaPage extends StatelessWidget {
 
 class StatusDisplay extends BlocBuilder<NumberTriviaBloc, NumberTriviaState> {
   StatusDisplay()
-      : super(builder: (context, state) {
-          if (state is Empty) {
+      : super(builder: (context, numberTriviaState) {
+          if (numberTriviaState is Empty) {
             return MessageDisplay(message: 'Start searching!');
           } else {
             return Placeholder();
@@ -77,7 +77,10 @@ class MessageDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(message),
+      child: SingleChildScrollView(
+        child: Text(message,
+            style: TextStyle(fontSize: 25), textAlign: TextAlign.center),
+      ),
     );
   }
 }
