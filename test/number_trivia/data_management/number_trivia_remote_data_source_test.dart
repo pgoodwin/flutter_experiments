@@ -1,12 +1,12 @@
 import 'package:flutter_experiments/src/error/exception.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia_remote_data_source.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia_remote_data_source.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 
-import '../fixtures/fixture_reader.dart';
+import '../../fixtures/fixture_reader.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
 

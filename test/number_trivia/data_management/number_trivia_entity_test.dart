@@ -1,7 +1,7 @@
-import 'package:flutter_experiments/src/number_trivia/number_trivia.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../fixtures/fixture_reader.dart';
+import '../../fixtures/fixture_reader.dart';
 
 void main() {
   final expectedNumberTrivia = NumberTrivia(number: 1, text: 'Test Text');

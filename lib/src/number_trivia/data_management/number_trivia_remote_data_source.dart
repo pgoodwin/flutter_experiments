@@ -1,5 +1,5 @@
 import 'package:flutter_experiments/src/error/exception.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 

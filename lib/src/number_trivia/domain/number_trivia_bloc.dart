@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_experiments/src/error/exception.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia_bloc/bloc.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia_service.dart';
+import 'package:flutter_experiments/src/number_trivia/domain/bloc.dart';
+import 'package:flutter_experiments/src/number_trivia/domain/number_trivia_service.dart';
 import 'package:flutter_experiments/src/util/input_converter.dart';
 import 'package:meta/meta.dart';
 

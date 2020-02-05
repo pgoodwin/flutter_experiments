@@ -1,11 +1,11 @@
 import 'package:flutter_experiments/src/error/exception.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia_local_data_source.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia_local_data_source.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:matcher/matcher.dart';
 
-import '../fakes/fake_shared_preferences.dart';
-import '../fixtures/fixture_reader.dart';
+import '../../fakes/fake_shared_preferences.dart';
+import '../../fixtures/fixture_reader.dart';
 
 void main() {
   NumberTriviaLocalDataSource subject;

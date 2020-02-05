@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia.dart';
 import 'package:meta/meta.dart';
 
 @immutable

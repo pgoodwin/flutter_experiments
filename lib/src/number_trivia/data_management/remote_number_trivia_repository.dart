@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_experiments/core/platform/network_info.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia_local_data_source.dart';
-import 'package:flutter_experiments/src/number_trivia/number_trivia_remote_data_source.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia_local_data_source.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia_remote_data_source.dart';
 import 'package:meta/meta.dart';
 
 class RemoteNumberTriviaRepository implements NumberTriviaRepository {
