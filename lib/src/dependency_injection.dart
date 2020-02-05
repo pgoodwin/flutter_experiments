@@ -10,41 +10,61 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'number_trivia/data_management/number_trivia.dart';
+
 final injector = GetIt.instance;
 
+class FakeNetworkInfo implements NetworkInfo {
+  @override
+  Future<bool> get isConnected async => true;
+}
+
 Future<void> init() async {
-  injector.registerSingleton(http.Client());
+  injector.registerLazySingleton(
+    () => http.Client(),
+  );
 
-  injector.registerSingleton(NumberTriviaRemoteDataSource(
-    client: injector.get()
-  ));
+  injector.registerLazySingleton(
+    () => NumberTriviaRemoteDataSource(client: injector.get()),
+  );
 
-  injector.registerLazySingleton(() async => await SharedPreferences.getInstance());
+  final sharedPreferences = await SharedPreferences.getInstance();
+  injector.registerLazySingleton(
+    () => sharedPreferences,
+  );
 
-  injector.registerSingleton(NumberTriviaLocalDataSource(
-    sharedPreferences: injector.get()
-  ));
+  injector.registerLazySingleton(
+    () => NumberTriviaLocalDataSource(sharedPreferences: injector.get()),
+  );
 
-  injector.registerSingleton(DataConnectionChecker());
+  injector.registerLazySingleton(
+    () => DataConnectionChecker(),
+  );
 
-  injector.registerSingleton(NetworkInfo(
-    connectionChecker: injector.get()
-  ));
+  injector.registerLazySingleton<NetworkInfo>(
+    () => FakeNetworkInfo(), //NetworkInfo(connectionChecker: injector.get()),
+  );
 
-  injector.registerSingleton(RemoteNumberTriviaRepository(
-    remoteDataSource: injector.get(),
-    localDataSource: injector.get(),
-    networkInfo: injector.get()
-  ));
+  injector.registerLazySingleton<NumberTriviaRepository>(
+    () => RemoteNumberTriviaRepository(
+      remoteDataSource: injector.get(),
+      localDataSource: injector.get(),
+      networkInfo: injector.get(),
+    ),
+  );
 
-  injector.registerSingleton(NumberTriviaService(
-    numberTriviaRepository: injector.get()
-  ));
+  injector.registerLazySingleton(
+    () => NumberTriviaService(numberTriviaRepository: injector.get()),
+  );
 
-  injector.registerSingleton(InputConverter());
+  injector.registerLazySingleton(
+    () => InputConverter(),
+  );
 
-  injector.registerFactory(() => NumberTriviaBloc(
-    numberTriviaService: injector.get(),
-    inputConverter: injector.get(),
-  ));
+  injector.registerFactory<NumberTriviaBloc>(
+    () => NumberTriviaBloc(
+      numberTriviaService: injector.get(),
+      inputConverter: injector.get(),
+    ),
+  );
 }
