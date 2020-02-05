@@ -4,8 +4,8 @@ import 'package:flutter_experiments/src/dependency_injection.dart'
 import 'package:flutter_experiments/src/number_trivia/ui/number_trivia_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await DependencyInjection.init();
-  print(DependencyInjection.injector);
   runApp(MyApp());
 }
 

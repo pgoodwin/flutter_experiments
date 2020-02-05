@@ -48,7 +48,7 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       case CacheException:
         return _cacheFailureMessage;
       default:
-        return 'unknown failure type';
+        return 'unknown failure type: $exception.';
     }
   }
 }
