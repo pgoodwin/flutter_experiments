@@ -14,40 +14,42 @@ class NumberTriviaPage extends StatelessWidget {
     );
   }
 
+  // A [BlocProvider] is a provider of [Widgets] that get their data from BLoCs.
+  // It is itself a [Widget]
   BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final widthInset = screenSize.width < 740 ? 20 : (screenSize.width - 700) / 2;
+
     return BlocProvider(
       builder: (_) => injector<NumberTriviaBloc>(),
       child: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(children: <Widget>[
-          SizedBox(height: 10),
-          // Top half
-          Container(
-            // Third of the size of the screen
-            height: MediaQuery.of(context).size.height / 3,
-            // Message Text widgets / CircularLoadingIndicator
-            child: Placeholder(),
-          ),
-          SizedBox(height: 20),
-          // Bottom half
-          Column(children: <Widget>[
-            // TextField
-            Placeholder(fallbackHeight: 40),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: widthInset),
+          child: Column(children: <Widget>[
             SizedBox(height: 10),
-            Row(children: <Widget>[
-              Expanded(
-                // Search concrete button
-                child: Placeholder(fallbackHeight: 30),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                  // Random button
-                  child: Placeholder(fallbackHeight: 30))
+            // Top half
+            Container(
+              // Third of the height of the screen
+              height: screenSize.height / 3,
+              // Message Text widgets / CircularLoadingIndicator
+              child: Placeholder(),
+            ),
+            SizedBox(height: 20),
+            // Bottom half
+            Column(children: <Widget>[
+              // TextField
+              Placeholder(fallbackHeight: 40),
+              SizedBox(height: 10),
+              Row(children: <Widget>[
+                Expanded(
+                  // Search concrete button
+                  child: Placeholder(fallbackHeight: 30),
+                )
+              ])
             ])
-          ])
-        ]),
-      )),
+          ]),
+        ),
+      ),
     );
   }
 }
