@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_experiments/src/dependency_injection.dart';
+import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia.dart';
 import 'package:flutter_experiments/src/number_trivia/domain/bloc.dart';
 
 class NumberTriviaPage extends StatelessWidget {
@@ -32,7 +33,9 @@ class NumberTriviaPage extends StatelessWidget {
             Container(
               // Third of the size of the screen
               height: screenSize.height / 3,
-              child: StatusDisplay(),
+              child: Center(
+                child: StatusDisplay(),
+              ),
             ),
             SizedBox(height: 20),
             // Bottom half
@@ -59,10 +62,17 @@ class StatusDisplay extends BlocBuilder<NumberTriviaBloc, NumberTriviaState> {
       : super(builder: (context, numberTriviaState) {
           if (numberTriviaState is Empty) {
             return MessageDisplay(message: 'Start searching!');
-          } else {
-            return Placeholder();
           }
-          // We're going to also check for the other states
+          if (numberTriviaState is Loading) {
+            return CircularProgressIndicator();
+          }
+          if (numberTriviaState is Loaded) {
+            return TriviaDisplay(trivia: numberTriviaState.trivia);
+          }
+          if (numberTriviaState is Error) {
+            return MessageDisplay(message: numberTriviaState.message);
+          }
+          return MessageDisplay(message: 'Unknown State. You\'re on your own now.');
         });
 }
 
@@ -76,11 +86,47 @@ class MessageDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
         child: Text(message,
             style: TextStyle(fontSize: 25), textAlign: TextAlign.center),
-      ),
+      );
+  }
+}
+
+class TriviaDisplay extends StatelessWidget {
+  final NumberTrivia trivia;
+
+  const TriviaDisplay({
+    Key key,
+    this.trivia,
+  })  : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+        children: <Widget>[
+          // Fixed size, doesn't scroll
+          Text(
+            trivia.number.toString(),
+            style: TextStyle(
+              fontSize: 50,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          // Expanded makes it fill in all the remaining space
+          Expanded(
+            child: Center(
+              // Only the trivia "message" part will be scrollable
+              child: SingleChildScrollView(
+                child: Text(
+                  trivia.text,
+                  style: TextStyle(fontSize: 25),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          )
+        ],
     );
   }
 }
