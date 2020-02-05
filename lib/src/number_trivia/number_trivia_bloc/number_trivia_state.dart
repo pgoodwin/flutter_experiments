@@ -15,11 +15,21 @@ class Loaded extends NumberTriviaState {
   final NumberTrivia trivia;
 
   Loaded({@required this.trivia}) : super([trivia]);
+
+  @override
+  String toString() {
+    return 'Loaded{trivia: $trivia}';
+  }
 }
 
 class Error extends NumberTriviaState {
   final String message;
 
   Error({@required this.message}) : super([message]);
+
+  @override
+  String toString() {
+    return 'Error{message: $message}';
+  }
 }
 

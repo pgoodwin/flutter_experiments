@@ -26,6 +26,11 @@ class NumberTrivia extends Equatable {
   Map<String, dynamic> toJson() => {'text': text, 'number': number};
 
   String toJsonString() => json.encode(this.toJson());
+
+  @override
+  String toString() {
+    return 'NumberTrivia{text: $text, number: $number}';
+  }
 }
 
 abstract class NumberTriviaRepository {

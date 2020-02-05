@@ -7,6 +7,8 @@ import 'package:flutter_experiments/src/util/input_converter.dart';
 import 'package:meta/meta.dart';
 
 class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
+  static const _conversionFailureMessage = 'number conversion failed';
+
   final NumberTriviaService numberTriviaService;
   final InputConverter inputConverter;
 
@@ -17,13 +19,13 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
   NumberTriviaState get initialState => Empty();
 
   @override
-  Stream<NumberTriviaState> mapEventToState(NumberTriviaEvent event,) async* {
+  Stream<NumberTriviaState> mapEventToState(NumberTriviaEvent event) async* {
     if (event is GetTriviaForConcreteNumber) {
       final inputNumber =
-      inputConverter.stringToUnsignedInteger(event.numberString);
+          inputConverter.stringToUnsignedInteger(event.numberString);
 
       yield* inputNumber.fold((exception) async* {
-        yield Error(message: 'number conversion failed');
+        yield Error(message: _conversionFailureMessage);
       }, (number) async* {
         throw UnimplementedError();
       });
