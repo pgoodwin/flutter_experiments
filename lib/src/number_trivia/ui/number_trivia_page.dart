@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_experiments/src/dependency_injection.dart';
-import 'package:flutter_experiments/src/number_trivia/data_management/number_trivia.dart';
 import 'package:flutter_experiments/src/number_trivia/domain/bloc.dart';
+import 'package:flutter_experiments/src/number_trivia/ui/widgets/widgets.dart';
 
 class NumberTriviaPage extends StatelessWidget {
   @override
@@ -74,59 +74,4 @@ class StatusDisplay extends BlocBuilder<NumberTriviaBloc, NumberTriviaState> {
           }
           return MessageDisplay(message: 'Unknown State. You\'re on your own now.');
         });
-}
-
-class MessageDisplay extends StatelessWidget {
-  final String message;
-
-  const MessageDisplay({
-    Key key,
-    @required this.message,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Text(message,
-            style: TextStyle(fontSize: 25), textAlign: TextAlign.center),
-      );
-  }
-}
-
-class TriviaDisplay extends StatelessWidget {
-  final NumberTrivia trivia;
-
-  const TriviaDisplay({
-    Key key,
-    this.trivia,
-  })  : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          // Fixed size, doesn't scroll
-          Text(
-            trivia.number.toString(),
-            style: TextStyle(
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          // Expanded makes it fill in all the remaining space
-          Expanded(
-            child: Center(
-              // Only the trivia "message" part will be scrollable
-              child: SingleChildScrollView(
-                child: Text(
-                  trivia.text,
-                  style: TextStyle(fontSize: 25),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          )
-        ],
-    );
-  }
 }
