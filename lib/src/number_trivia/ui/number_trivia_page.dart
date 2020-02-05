@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_experiments/src/dependency_injection.dart' as DI;
+import 'package:flutter_experiments/src/dependency_injection.dart';
 import 'package:flutter_experiments/src/number_trivia/domain/bloc.dart';
 
 class NumberTriviaPage extends StatelessWidget {
@@ -10,10 +10,44 @@ class NumberTriviaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Number Trivia'),
       ),
-      body: BlocProvider(
-        builder: (_) => DI.injector.get<NumberTriviaBloc>(),
-        child: Container(),
-      ),
+      body: buildBody(context),
+    );
+  }
+
+  BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
+    return BlocProvider(
+      builder: (_) => injector<NumberTriviaBloc>(),
+      child: Center(
+          child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(children: <Widget>[
+          SizedBox(height: 10),
+          // Top half
+          Container(
+            // Third of the size of the screen
+            height: MediaQuery.of(context).size.height / 3,
+            // Message Text widgets / CircularLoadingIndicator
+            child: Placeholder(),
+          ),
+          SizedBox(height: 20),
+          // Bottom half
+          Column(children: <Widget>[
+            // TextField
+            Placeholder(fallbackHeight: 40),
+            SizedBox(height: 10),
+            Row(children: <Widget>[
+              Expanded(
+                // Search concrete button
+                child: Placeholder(fallbackHeight: 30),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                  // Random button
+                  child: Placeholder(fallbackHeight: 30))
+            ])
+          ])
+        ]),
+      )),
     );
   }
 }
