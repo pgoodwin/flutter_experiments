@@ -29,7 +29,11 @@ class NumberTriviaPage extends StatelessWidget {
           child: Column(children: <Widget>[
             SizedBox(height: 10),
             // Top half
-            StatusDisplay(),
+            Container(
+              // Third of the size of the screen
+              height: screenSize.height / 3,
+              child: StatusDisplay(),
+            ),
             SizedBox(height: 20),
             // Bottom half
             Column(children: <Widget>[
@@ -51,18 +55,29 @@ class NumberTriviaPage extends StatelessWidget {
 }
 
 class StatusDisplay extends BlocBuilder<NumberTriviaBloc, NumberTriviaState> {
-  StatusDisplay() : super(builder:(context, state) {
-    if (state is Empty) {
-      return Container(
-        // Third of the size of the screen
-        height: MediaQuery.of(context).size.height / 3,
-        child: Center(
-          child: Text('Start searching!'),
-        ),
-      );
-    } else {
-      return Placeholder();
-    }
-    // We're going to also check for the other states
-  });
+  StatusDisplay()
+      : super(builder: (context, state) {
+          if (state is Empty) {
+            return MessageDisplay(message: 'Start searching!');
+          } else {
+            return Placeholder();
+          }
+          // We're going to also check for the other states
+        });
+}
+
+class MessageDisplay extends StatelessWidget {
+  final String message;
+
+  const MessageDisplay({
+    Key key,
+    @required this.message,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(message),
+    );
+  }
 }
