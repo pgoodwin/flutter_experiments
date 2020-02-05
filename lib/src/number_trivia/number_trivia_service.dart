@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 class NumberTriviaService {
   NumberTriviaRepository numberTriviaRepository;
 
-  NumberTriviaService(this.numberTriviaRepository);
+  NumberTriviaService({this.numberTriviaRepository});
 
   Future<Either<Exception, NumberTrivia>> getNumberTrivia(
       {@required int number}) {

@@ -13,7 +13,7 @@ void main() {
 
   setUp(() {
     mockNumberTriviaRepository = MockNumberTriviaRepository();
-    subject = NumberTriviaService(mockNumberTriviaRepository);
+    subject = NumberTriviaService(numberTriviaRepository: mockNumberTriviaRepository);
   });
 
   final inputNumber = 1;
